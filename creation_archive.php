@@ -16,9 +16,6 @@ copy("Config/parameters.yml","DossierArchive/app/config/parameters.yml");
 
 zipRep($dossier);
 
-rrmdir($dossier);
-
-
 function zipRep($rep){
 	$rootPath = realpath($rep);
 	$zip = new ZipArchive();
