@@ -1,9 +1,20 @@
 <?php
 
-$files = glob('Auto{,.}*', GLOB_BRACE);
-foreach($files as $file){ // iterate files
-  if(is_file($file))
-    unlink($file); // delete file
-}
+$dir = "DossierArchive";
+rrmdir($dir);
 
+function rrmdir($dir) {
+  if (is_dir($dir)) {	
+    $objects = scandir($dir);
+    foreach ($objects as $object) {
+      if ($object != "." && $object != "..") {
+        if (filetype($dir."/".$object) == "dir") 
+           rrmdir($dir."/".$object); 
+        else unlink   ($dir."/".$object);
+      }
+    }
+    reset($objects);
+    rmdir($dir);
+  }
+ }
 ?>

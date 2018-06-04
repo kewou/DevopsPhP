@@ -17,6 +17,8 @@ copy("Config/parameters.yml","DossierArchive/app/config/parameters.yml");
 
 zipRep($dossier);
 
+rrmdir($dossier);
+
 
 function zipRep($rep){
 	$rootPath = realpath($rep);
@@ -70,6 +72,21 @@ function CopieRep ($orig,$dest) {
 		} 
 	} 
 	$dir->close(); 
-} 
+}
+
+function rrmdir($dir) {
+  if (is_dir($dir)) {	
+    $objects = scandir($dir);
+    foreach ($objects as $object) {
+      if ($object != "." && $object != "..") {
+        if (filetype($dir."/".$object) == "dir") 
+           rrmdir($dir."/".$object); 
+        else unlink   ($dir."/".$object);
+      }
+    }
+    reset($objects);
+    rmdir($dir);
+  }
+ }
 	
 ?>
