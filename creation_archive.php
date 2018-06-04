@@ -9,7 +9,6 @@ if(!is_dir($dossier)){
 CopieRep("../Beezyweb/app",$dossier."/app");
 CopieRep("../Beezyweb/bin",$dossier."/bin");
 CopieRep("../Beezyweb/src",$dossier."/src");
-CopieRep("../Beezyweb/vendor",$dossier."/vendor");
 CopieRep("../Beezyweb/web",$dossier."/web");
 
 
