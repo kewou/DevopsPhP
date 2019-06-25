@@ -1,0 +1,58 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+
+imports:
+    - { resource: "@UserBundle/Resources/config/security.yml" }
+    
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+        
+    role_hierarchy:
+        ROLE_ADMIN:  ROLE_USER        
+        ROLE_SUPER_ADMIN: [ROLE_USER,ROLE_ADMIN,ROLE_ALLOWED_TO_SWITCH]
+        
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+            
+    firewalls:        
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                login_path:  fos_user_security_login
+                use_forward:        false
+                check_path:         fos_user_security_check
+                failure_path: null
+                default_target_path: /privee
+                remember_me: false
+            logout:
+                path: fos_user_security_logout
+                target: /connexion
+            anonymous: true 
+        admin:
+            pattern: /admin(.*)
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                check_path:     /admin/login_check
+                default_target_path: /admin
+            logout:
+                path:           /admin/logout
+                target:         /admin/login
+            anonymous: true          
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }        
+        - { path: ^/admin/*, role: ROLE_SUPER_ADMIN }        
+        - { path: ^/moniteur/*, role: ROLE_ADMIN}
+        - { path: ^/privee/*, role: ROLE_USER }
+        - { path: ^/admin, ip: 127.0.0.1, requires_channel: https }
+        - { path: ^/deconnexion$, role: IS_AUTHENTICATED_FULLY }              
+                

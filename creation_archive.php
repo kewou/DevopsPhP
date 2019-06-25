@@ -1,25 +1,53 @@
 <?php
 
-$dossier = 'DossierArchive';
 
+// Création du Nexus
+global $dossier;
+$dossier = 'Nexus';
 if(!is_dir($dossier)){
    mkdir($dossier);
 }
 
-CopieRep("../Beezyweb/app",$dossier."/app");
-CopieRep("../Beezyweb/bin",$dossier."/bin");
-CopieRep("../Beezyweb/src",$dossier."/src");
-CopieRep("../Beezyweb/web",$dossier."/web");
+// Main du projet
+$version="version-3.0.0";
+//deleteOldVersion($dossier);
+//copieNewVersion($dossier);
+//archiveVersion($dossier,$version);
+copy("Config/parameters.yml","Nexus/app/config/parameters.yml");
 
 
-copy("Config/parameters.yml","DossierArchive/app/config/parameters.yml");
 
-zipRep($dossier);
+// Suppression de l'ancienne version
+function deleteOldVersion($dossier){	
+	echo "Suppression Old version \n";
+	rrmdir($dossier."/app");
+	rrmdir($dossier."/bin");
+	rrmdir($dossier."/src");
+	rrmdir($dossier."/web");
+	echo "Supression done";	
+}
 
-function zipRep($rep){
+// Copie de la nouvelle version	
+function copieNewVersion($dossier){	
+	echo "Copie New version \n";
+	CopieRep("../Beezyweb/app",$dossier."/app");
+	CopieRep("../Beezyweb/bin",$dossier."/bin");
+	CopieRep("../Beezyweb/src",$dossier."/src");
+	CopieRep("../Beezyweb/web",$dossier."/web");
+	echo "Copie done \n\r";
+}
+
+// Archivage de la version
+function archiveVersion($dossier,$version){
+	echo "Archive version \n";
+	zipRep($dossier,$version);
+	echo "Archive done";
+}	
+
+function zipRep($rep,$version){
 	$rootPath = realpath($rep);
 	$zip = new ZipArchive();
-	$zip->open('version1.0.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+	$zip->open($version.'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 	// Create recursive directory iterator
 	/** @var SplFileInfo[] $files */
 	$files = new RecursiveIteratorIterator(
@@ -46,8 +74,7 @@ function zipRep($rep){
 		
 }
 
-function CopieRep ($orig,$dest) { 
-   
+function CopieRep ($orig,$dest) {    
 	if(!is_dir($dest)){
 	   mkdir($dest);
 	}
@@ -70,7 +97,7 @@ function CopieRep ($orig,$dest) {
 	$dir->close(); 
 }
 
-function rrmdir($dir) {
+function rrmdir($dir) {  
   if (is_dir($dir)) {	
     $objects = scandir($dir);
     foreach ($objects as $object) {
@@ -82,7 +109,7 @@ function rrmdir($dir) {
     }
     reset($objects);
     rmdir($dir);
-  }
+  }  
  }
 	
 ?>
