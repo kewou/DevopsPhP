@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
+        <title>{% block title %}Beezyweb{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+
+        <style> 
+            
+
+*
+</style>
+    </head>
+    <body class="landing">
+        <!-- Header -->
+        {% block header %}{% endblock %}
+        <!-- Page -->
+        <div id="page-wrapper">                
+            <div id="main" class="wrapper style1">                     
+                <div class="container">
+                    <div class="loader"></div>
+                    <div class="logo"><span class="icon fa-diamond"></span></div>
+                    <!-- Contenu -->
+                    <section id="contenu">
+                        <div>
+                        {% block contenu %}{% endblock %}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>            
+        <!-- Footer -->
+        <footer id="footer">
+            <div id="linksFooter">
+                <ul>
+                    <a href="{{path("Public_mentionLegale")}}">Mentions légales</a> |
+                    <a href="{{path("Public_contact")}}">Contact</a>  |                  
+                    <a href="{{path("fos_user_registration_register")}}">Inscription</a>
+                </ul>
+            </div>
+            <p>
+                &copy; Joel NOUMIA. All rights reserved, 2015-{{ 'now'|date('Y') }}
+            </p>
+        </footer>                        
+        
+        <script type="text/javascript" src="{{ asset('bundles/public/js/toTop/js/easing.js')}}"></script> 
+        <script type="text/javascript" src="{{ asset('bundles/public/js/toTop/js/jquery.ui.totop.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/public/js/toTop/js/launch.js')}}"></script>
+        
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/skel.min.js')}}"></script> 
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/jquery.scrolly.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/jquery.dropotron.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/jquery.scrollex.min.js')}}"></script>        
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/util.js')}}"></script>        
+        <script type="text/javascript" src="{{ asset('bundles/public/assets/js/main.js')}}"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
+        <script src="{{ asset('bundles/user/js/Inscription.js')}}"></script>
+        <script src="{{ asset('bundles/user/js/message_fr.js')}}"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script type="text/javascript" src="{{ asset('bundles/public/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    </body>
+</html>
